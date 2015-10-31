@@ -22,9 +22,7 @@ sysinfo.txt
 
 # Personal touch
 
-Assets/Editor/
 Assets/RAIN/
 Assets/UnityVS/
-Editor.meta
 Rain.meta
 UnityVS.meta
