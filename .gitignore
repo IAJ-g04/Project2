@@ -25,4 +25,6 @@ sysinfo.txt
 Assets/Editor/
 Assets/RAIN/
 Assets/UnityVS/
-*.meta
+Editor.meta
+Rain.meta
+UnityVS.meta
