@@ -34,7 +34,30 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
         public override MovementOutput GetMovement()
         {
-            throw new NotImplementedException();
+            Goal g = new Goal();
+            foreach(Targeter t in Targeters)
+            {
+                g.UpdateChannels(t.GetGoal(Character));
+            }
+            foreach(Decomposer d in Decomposers)
+            {
+                g = d.Decompose(Character, g);
+            }
+
+           // bool ValidPath = false;
+
+               GlobalPath path = Actuator.GetPath(Character, g) as GlobalPath;
+            LocalPath lpath = Actuator.GetPath(Character, g) as LocalPath;
+            foreach (Constraint c in Constraints)
+            {
+                if (c.WillViolate(path))
+                {
+                    g = c.Suggest(lpath, Character, g);
+                    continue;
+                }
+                return Actuator.GetMovement(Actuator.GetPath(Character, g), Character, g);
+            }
+            return DeadlockMovement.GetMovement();   
         }
     }
 }
