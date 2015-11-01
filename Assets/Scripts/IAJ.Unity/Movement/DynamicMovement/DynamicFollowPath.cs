@@ -19,7 +19,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement
             this.Character = character;
             this.globalPath = path;
             this.CurrentParam = 0.0f;
-            this.PathOffset = 0.2f;
+            this.PathOffset = 0.005f;
         }
 
         public override MovementOutput GetMovement()
@@ -28,7 +28,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement
                 return new MovementOutput();
 
             CurrentParam = globalPath.GetParam(Character.position, CurrentParam);
-
+            Debug.Log(CurrentParam);
             this.Target.position = globalPath.GetPosition(CurrentParam + PathOffset);
 
             return base.GetMovement();
