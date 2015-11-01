@@ -35,23 +35,11 @@ namespace Assets.Scripts.IAJ.Unity.Pathfinding.Path
 
         public override float GetParam(Vector3 position, float previousParam)
         {
-
-           /* if (this.PathEnd(previousParam))
-                return LocalPaths.Count;
-                */
             int i = (int)Math.Floor(previousParam);
 
             LineSegmentPath path = LocalPaths[i] as LineSegmentPath;
-
-            /*if (path.PathEnd(previousParam - i))
-            {
-                i++;
-                path = LocalPaths[i] as LineSegmentPath;
-               // Debug.Log(i);
-            }*/
-
-            Debug.Log(i + path.GetParam(position, previousParam));
-            return i + path.GetParam(position, previousParam);
+           
+            return i + path.GetParam(position, previousParam-i);
 
         }
 
@@ -66,17 +54,12 @@ namespace Assets.Scripts.IAJ.Unity.Pathfinding.Path
 
         public override bool PathEnd(float param)
         {
-            int i = (int)Math.Floor(param);
-
-            if (i <= LocalPaths.Count - 2)
-                return false;
+       
+            if (param >= LocalPaths.Count - 1)
+                return true;
             else
             {
-                param = param - i;
-                if (param <= PATHEND)
-                    return false;
-                else
-                    return true;
+                return false;
             }
         }
     }

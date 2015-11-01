@@ -211,6 +211,7 @@ namespace Assets.Scripts.IAJ.Unity.Pathfinding
             };
             var currentNode = node;
 
+            
             path.PathPositions.Add(this.GoalPosition);
 
             //I need to remove the first Node and the last Node because they correspond to the dummy first and last Polygons that were created by the initialization.

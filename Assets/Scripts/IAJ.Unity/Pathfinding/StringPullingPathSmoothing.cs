@@ -28,14 +28,15 @@ namespace Assets.Scripts.IAJ.Unity.Pathfinding
             };
 
             globalPath.PathNodes.Reverse();
+            globalPath.PathPositions.Reverse();
 
             NavMeshEdge goalNode = globalPath.PathNodes[0] as NavMeshEdge;
-            Vector3 pnext = goalNode.Position;
+            Vector3 pnext = globalPath.PathPositions[0];
 
-            globalPath.PathNodes.RemoveAt(0);
             smoothedPath.PathNodes.Add(goalNode);
             smoothedPath.PathPositions.Add(pnext);
-
+            
+            globalPath.PathNodes.RemoveAt(0);
             foreach (var node in globalPath.PathNodes)
             {
                 NavMeshEdge edge = node as NavMeshEdge;
@@ -49,6 +50,8 @@ namespace Assets.Scripts.IAJ.Unity.Pathfinding
 
             }
 
+            globalPath.PathNodes.Reverse();
+            globalPath.PathPositions.Reverse();
             smoothedPath.PathNodes.Reverse();
             smoothedPath.PathPositions.Reverse();
             return smoothedPath;

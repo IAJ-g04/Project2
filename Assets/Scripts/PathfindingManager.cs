@@ -64,21 +64,7 @@ public class PathfindingManager : MonoBehaviour {
 		}
 
 
-        if (this.character.Movement != null)
-        {
-            DynamicFollowPath movement = this.character.Movement as DynamicFollowPath;
-            if (movement != null)
-            {
-               /* this.currentSmoothedSolution = StringPullingPathSmoothing.SmoothPath(this.character.KinematicData, this.currentSmoothedSolution);
-                this.currentSmoothedSolution.CalculateLocalPathsFromPathPositions(this.character.KinematicData.position);
-                movement.globalPath = this.currentSmoothedSolution;
-                */
-                if (movement.PathEnd())
-                    this.character.Movement = null;
-
-            }
-        }
-
+   
         //call the pathfinding method if the user specified a new goal
         if (this.aStarPathFinding.InProgress)
 	    {
@@ -91,7 +77,7 @@ public class PathfindingManager : MonoBehaviour {
                 this.currentSmoothedSolution.CalculateLocalPathsFromPathPositions(this.character.KinematicData.position);
                 this.character.Movement = new DynamicFollowPath(this.character.KinematicData, currentSmoothedSolution)
                 {
-                    MaxAcceleration = 40.0f
+                    MaxAcceleration = 30.0f
                 };
             }
 	    }
