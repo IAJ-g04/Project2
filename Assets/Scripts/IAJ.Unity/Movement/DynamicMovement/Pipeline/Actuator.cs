@@ -48,11 +48,13 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 steering.linear += ds.GetMovement().linear;
             }
 
-            //  velocidades
-            steering.linear = min(steering.linear, maxAcceleration)
-        steering.angular = min(steering.angular, maxRotation)
+            //  velocidades e possivelmente erros
 
-        return steering
+            steering.linear.Normalize();
+            steering.linear *= this.maxAcceleration;
+            steering.angular *= this.maxAcceleration;            
+
+            return steering;
         }
     }
 }
