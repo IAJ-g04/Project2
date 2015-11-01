@@ -44,7 +44,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 g = d.Decompose(Character, g);
             }
 
-           // bool ValidPath = false;
+           // bool ValidPath = false; TO DO esta parte ta uma bequita meh
 
                GlobalPath path = Actuator.GetPath(Character, g) as GlobalPath;
             LocalPath lpath = Actuator.GetPath(Character, g) as LocalPath;
