@@ -12,7 +12,7 @@
         public float TimeToTargetSpeed { get; set; }
 
         public KinematicData MovingTarget { get; set; }
-
+     
         public DynamicVelocityMatch()
         {
             this.TimeToTargetSpeed = 0.5f;
