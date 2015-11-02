@@ -12,10 +12,14 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
     class PathfindingDecomposer : Decomposer
     {
+        public AStarPathfinding Astar { get; set; }
+
         public override Goal Decompose (KinematicData character, Goal goal)
         {
-            AStarPathfinding Astar = new NodeArrayAStarPathFinding(Graph, Heuristic);
-            Astar.InitializePathfindingSearch(character.position, goal.position);
+            if((Astar == null) || (Astar.GoalNode.Position != goal.position)) { 
+                Astar = new NodeArrayAStarPathFinding(Graph, Heuristic);
+                Astar.InitializePathfindingSearch(character.position, goal.position);
+            }
 
             // In goal, ends
             if (Astar.StartNode.Equals(Astar.GoalNode))
