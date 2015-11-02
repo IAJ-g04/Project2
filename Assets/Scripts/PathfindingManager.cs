@@ -186,6 +186,15 @@ public class PathfindingManager : MonoBehaviour
             pipe.Constraints.Add(trollConstraint);
         }
 
+
+        MapConstraint mapConstraint = new MapConstraint()
+        {
+            chars = character,
+            navMeshP = navMesh,
+            margin = 1.0f
+        };
+        pipe.Constraints.Add(mapConstraint);
+
         return pipe;
 
     }
