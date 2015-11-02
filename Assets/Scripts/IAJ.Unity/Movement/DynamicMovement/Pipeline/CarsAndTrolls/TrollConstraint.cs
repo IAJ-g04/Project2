@@ -19,9 +19,9 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
         
         public override Boolean WillViolate(LineSegmentPath path)
         {                       
-           if (MathHelper.closestParamInLineSegmentToPoint(path.StartPosition, path.EndPosition, Troll.KinematicData.position) < TrollRadius){               
+         /*  if (MathHelper.closestParamInLineSegmentToPoint(path.StartPosition, path.EndPosition, Troll.KinematicData.position) < TrollRadius){               
               return true;
-            }
+            }*/
             return false;
         }
 
