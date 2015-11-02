@@ -18,21 +18,13 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
         DynamicCharacter troll { set; get; }
 
 
-        public Boolean WillViolate(GlobalPath path)
-        {
-            int ind = 0;
-            foreach (LocalPath p in path.LocalPaths)
-            {              
-                if (MathHelper.closestParamInLineSegmentToPoint(p.StartPosition, p.EndPosition, troll.KinematicData.position) < TrollRadius)
-                {
-                    probInd = ind;
-                    return true;
-                }
-                ind++;
+        public Boolean WillViolate(LineSegmentPath path)
+        {                       
+           if (MathHelper.closestParamInLineSegmentToPoint(path.StartPosition, path.EndPosition, troll.KinematicData.position) < TrollRadius){               
+              return true;
             }
             return false;
         }
-
 
         public Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)
         {

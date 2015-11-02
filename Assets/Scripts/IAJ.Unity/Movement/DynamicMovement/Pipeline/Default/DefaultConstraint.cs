@@ -17,21 +17,13 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
         public int probInd { set; get; }
 
 
-        public Boolean WillViolate(GlobalPath path)
+        public Boolean WillViolate(LineSegmentPath path)
         {
-            int ind = 0;
-            foreach (LocalPath p in path.LocalPaths)
-            {
                 //maybe not right func TO DO
-                if (MathHelper.closestParamInLineSegmentToPoint(p.StartPosition, p.EndPosition, center) < radius)
-                {
-                    probInd = ind;
-                    return true;
-                }
-                ind++;
-            }
-            return false;
-
+           if (MathHelper.closestParamInLineSegmentToPoint(path.StartPosition, path.EndPosition, center) < radius){
+               return true;
+           }
+           return false;
         }
 
         public Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)

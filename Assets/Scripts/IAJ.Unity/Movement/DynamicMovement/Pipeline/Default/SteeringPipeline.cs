@@ -62,7 +62,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 LineSegmentPath path = Actuator.GetPath();
                 foreach (Constraint c in Constraints)
                 {
-                    if (c.WillViolate(GlobalPath))
+                    if (c.WillViolate(path))
                     {
                         g = c.Suggest(path, Character, g);
                         continue;

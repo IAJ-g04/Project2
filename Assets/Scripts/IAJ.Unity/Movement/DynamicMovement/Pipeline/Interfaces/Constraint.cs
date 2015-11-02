@@ -8,7 +8,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline.Interfaces
 {
     interface Constraint
     {
-        Boolean WillViolate(GlobalPath path);
+        Boolean WillViolate(LineSegmentPath path);
         Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal);
     }
 }
