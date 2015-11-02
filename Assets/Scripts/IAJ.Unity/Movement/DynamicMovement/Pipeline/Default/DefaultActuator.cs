@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class DefaultActuator : Actuator    
+    public class DefaultActuator : Actuator    
     {
 
         public Goal goal { get; set; }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class TrollActuator : Actuator    
+    public class TrollActuator : Actuator    
     {
 
         public Goal goal { get; set; }

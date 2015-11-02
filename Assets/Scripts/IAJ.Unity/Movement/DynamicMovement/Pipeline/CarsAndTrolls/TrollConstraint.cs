@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class TrollConstraint : Constraint
+    public class TrollConstraint : Constraint
     {
         public float margin { set; get; }
         public const float TrollRadius = 0.2f;

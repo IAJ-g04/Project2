@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class DefaultDecomposer : Decomposer
+    public class DefaultDecomposer : Decomposer
     {
         public override Goal Decompose (KinematicData character, Goal goal)
         {

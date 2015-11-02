@@ -11,11 +11,13 @@ using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class PathfindingDecomposer : Decomposer
+    public class PathfindingDecomposer : Decomposer
     {
-        public AStarPathfinding Astar { get; set; }
+        public NodeArrayAStarPathFinding Astar { get; set; }
         public GlobalPath AStarSolution { get; set; }
         public float CurrentParam  {get;set;}
+
+        public Goal previousGoal { get; set; }
 
         public PathfindingDecomposer()
         {
@@ -24,24 +26,17 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
         public override Goal Decompose (KinematicData character, Goal goal)
         {
-            if((Astar == null) || (Astar.GoalNode.Position != goal.position)) { 
+            if((Astar == null)) { 
                 Astar = new NodeArrayAStarPathFinding(Graph, Heuristic);
                 Astar.InitializePathfindingSearch(character.position, goal.position);
                 CurrentParam = 0.0f;
-                Debug.Log("At start, Initializing Pathfinding Search " + goal);
             }
+            
 
-            // In goal, ends
-            /* if ((character.position - goal.position).sqrMagnitude <= 2.5f)         {
-                 Debug.Log("Reached Goal");
-                 return goal;
-             }
-             */
-             // else, plan
-             GlobalPath currentSolution;
+            GlobalPath currentSolution;
              if (Astar.InProgress)
-             {
-                 Debug.Log("AStar In Progress");
+            {
+                Debug.Log(Astar.InProgress);
                  var finished = Astar.Search(out currentSolution, true);
                 
                   if (finished && currentSolution != null)
@@ -51,15 +46,12 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                      this.GlobalPath.CalculateLocalPathsFromPathPositions(character.position);
                     // gets first node
                     goal.position = this.GlobalPath.LocalPaths[0].EndPosition;
-                     Debug.Log("Reached first pos " + goal);
-
                      return goal;
                  }
                 else if(currentSolution != null && currentSolution.IsPartial)
                 {
                     goal.position = currentSolution.PathPositions[0];
-
-                    Debug.Log("Temp " + goal);
+                    
                     return goal;
                 }
             }
@@ -69,17 +61,14 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                  if (GlobalPath.PathEnd(CurrentParam))
                  {
                      goal.position = GlobalPath.LocalPaths[GlobalPath.LocalPaths.Count - 1].GetPosition(1.0f);
-                    Debug.Log("PathEnd " + goal);
                     return goal;
                 }
 
                  CurrentParam = GlobalPath.GetParam(character.position, CurrentParam);
 
-                 goal.position = GlobalPath.GetPosition(CurrentParam);
-                 Debug.Log("Following path " + goal);
+                 goal.position = GlobalPath.GetPosition(CurrentParam + 0.2f);
                  return goal;
              }
-            Debug.Log("All failed " + goal);
             return new Goal();
          }
      }

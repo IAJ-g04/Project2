@@ -103,7 +103,8 @@ public class PathfindingManager : MonoBehaviour
                 // this.aStarPathFinding.InitializePathfindingSearch(this.character.KinematicData.position, this.endPosition);
 
                 this.startPosition = this.character.KinematicData.position;
-                InitializeSteeringPipeline(this.character, new KinematicData(new StaticData(this.endPosition)));
+                this.character.Movement = InitializeSteeringPipeline(this.character, new KinematicData(new StaticData(this.endPosition)));
+                this.draw = true;
             }
         }
 
@@ -133,7 +134,7 @@ public class PathfindingManager : MonoBehaviour
         }
     }
 
-    public void InitializeSteeringPipeline(DynamicCharacter orig, KinematicData dest)
+    public SteeringPipeline InitializeSteeringPipeline(DynamicCharacter orig, KinematicData dest)
     {
         //Pipeline
         SteeringPipeline pipe = new SteeringPipeline(orig.KinematicData)
@@ -185,9 +186,8 @@ public class PathfindingManager : MonoBehaviour
             pipe.Constraints.Add(trollConstraint);
         }
 
-        orig.Movement = pipe;
+        return pipe;
 
-        this.draw = true;
     }
 
     public void OnGUI()

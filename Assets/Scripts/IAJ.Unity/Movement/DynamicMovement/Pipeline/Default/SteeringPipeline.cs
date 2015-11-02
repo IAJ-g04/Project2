@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class SteeringPipeline : DynamicMovement
+    public class SteeringPipeline : DynamicMovement
     {
         public override string Name
         {

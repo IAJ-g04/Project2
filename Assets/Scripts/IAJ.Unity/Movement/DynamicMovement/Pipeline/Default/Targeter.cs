@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class Targeter
+    public class Targeter
     {
         public KinematicData Target { get; set; }
         public float LookAhead = 7.5f;
         public Goal GetGoal(KinematicData character)
         {
-            Goal g = new Goal() { position = Target.position + Target.velocity * LookAhead };
+            Goal g = new Goal() { position = Target.position + (Target.velocity * LookAhead )};
             g.hasPosition = true;
 
             return g;

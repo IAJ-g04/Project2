@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class DefaultConstraint : Constraint
+    public class DefaultConstraint : Constraint
     {
         public float margin { set; get; }
         public float radius { set; get; }

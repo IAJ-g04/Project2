@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class CarActuator : Actuator    
+    public class CarActuator : Actuator    
     {
         public override string Name
         {
