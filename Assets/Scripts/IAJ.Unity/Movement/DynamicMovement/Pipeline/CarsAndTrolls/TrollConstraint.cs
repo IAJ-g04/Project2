@@ -12,7 +12,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
     class TrollConstraint : Constraint
     {
         public float margin { set; get; }
-        public float radius { set; get; } = 0.2f;
+        public const float TrollRadius = 0.2f;
       //  public Vector3 center { set; get; }
         public int probInd { set; get; }
         DynamicCharacter troll { set; get; }
@@ -23,7 +23,8 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
             int ind = 0;
             foreach (LocalPath p in path.LocalPaths)
             {              
-                if (MathHelper.closestParamInLineSegmentToPoint(p.StartPosition, p.EndPosition, troll.KinematicData.position) < radius){
+                if (MathHelper.closestParamInLineSegmentToPoint(p.StartPosition, p.EndPosition, troll.KinematicData.position) < TrollRadius)
+                {
                     probInd = ind;
                     return true;
                 }
@@ -45,12 +46,12 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 Vector3 dirn =  path.EndPosition - path.StartPosition;
                 //pode nao ser esta func TO DO
                 Vector3 newdirn = Vector3.Cross(dirn, Vector3.Cross(dirn, Vector3.right));
-                newPt = troll.KinematicData.position + newdirn * radius * margin;
+                newPt = troll.KinematicData.position + newdirn * TrollRadius * margin;
             }
             else
             {
                 // Otherwise project the point out beyond the radius
-                newPt = troll.KinematicData.position + (closest - troll.KinematicData.position) * radius * margin / closest.sqrMagnitude;
+                newPt = troll.KinematicData.position + (closest - troll.KinematicData.position) * TrollRadius * margin / closest.sqrMagnitude;
             }
             // Set up the goal and return
             goal.position = newPt;
