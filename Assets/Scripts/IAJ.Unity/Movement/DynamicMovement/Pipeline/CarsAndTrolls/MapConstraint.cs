@@ -43,7 +43,13 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
         public override Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)
         {
-            // procurar ponto do segmento mais próximo ao centro da esfera
+            if (this.chars.KinematicData.velocity.sqrMagnitude < 1.5f)
+            {
+                this.chars.KinematicData.velocity *= 0.01f;
+            }
+            return goal; 
+
+           /* // procurar ponto do segmento mais próximo ao centro da esfera
             Vector3 closest = path.GetPosition(MathHelper.closestParamInLineSegmentToPoint(path.StartPosition, path.EndPosition, chars.KinematicData.position));
             // Check if we pass through the center point
 
@@ -65,7 +71,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 i = i + 0.25f;
             }
             return goal;
-            // Set up the goal and return
+            // Set up the goal and return*/
         }
     }
 }
