@@ -54,8 +54,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
             }
              else
              {
-
-                 if (GlobalPath.PathEnd(CurrentParam))
+                if (GlobalPath.PathEnd(CurrentParam))
                  {
                      goal.position = GlobalPath.LocalPaths[GlobalPath.LocalPaths.Count - 1].GetPosition(1.0f);
                     return goal;
