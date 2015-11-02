@@ -48,13 +48,11 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
             foreach (Targeter t in Targeters)
             {
                 g.UpdateChannels(t.GetGoal(Character));
-                Debug.Log("target aquired");
             }
             
             foreach (Decomposer d in Decomposers)
             {
                 g = d.Decompose(Character, g);
-                Debug.Log("Decomposed");
             }
 
             // bool ValidPath = false; TO DO esta parte ta uma bequita meh
@@ -65,10 +63,8 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 LineSegmentPath path = Actuator.GetPath();
                 foreach (Constraint c in Constraints)
                 {
-                    Debug.Log("checking constrains");
                     if (c.WillViolate(path))
                     {
-                        Debug.Log("Violou!");
                         g = c.Suggest(path, Character, g);
                         continue;
                     }

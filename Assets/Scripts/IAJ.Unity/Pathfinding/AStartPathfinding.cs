@@ -34,7 +34,7 @@ namespace Assets.Scripts.IAJ.Unity.Pathfinding
             this.NavMeshGraph = graph;
             this.Open = open;
             this.Closed = closed;
-            this.NodesPerSearch = 75; //by default we process all nodes in a single request
+            this.NodesPerSearch = 120; //by default we process all nodes in a single request
             this.InProgress = false;
             this.Heuristic = heuristic;
         }

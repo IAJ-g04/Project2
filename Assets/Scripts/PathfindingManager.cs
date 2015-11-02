@@ -27,6 +27,7 @@ public class PathfindingManager : MonoBehaviour
     private AStarPathfinding aStarPathFinding;
     private GlobalPath currentSolution;
     private GlobalPath currentSmoothedSolution;
+    private PathfindingDecomposer pathfindingDecomposer;
 
     private DynamicCharacter character;
 
@@ -56,9 +57,10 @@ public class PathfindingManager : MonoBehaviour
             enemy.Movement = movement;
             this.enemies.Add(enemy);
         }
-
+        
         this.aStarPathFinding = new NodeArrayAStarPathFinding(this.navMesh, new EuclideanDistanceHeuristic());
         this.aStarPathFinding.NodesPerSearch = 100;
+
     }
 
     // Update is called once per frame
@@ -97,15 +99,16 @@ public class PathfindingManager : MonoBehaviour
                 this.endDebugSphere.SetActive(true);
                 //this.currentClickNumber = 1;
                 this.endPosition = position;
-                this.draw = true;
                 //initialize the steering pipeline
-               // this.aStarPathFinding.InitializePathfindingSearch(this.character.KinematicData.position, this.endPosition);
+                // this.aStarPathFinding.InitializePathfindingSearch(this.character.KinematicData.position, this.endPosition);
+
+                this.startPosition = this.character.KinematicData.position;
                 InitializeSteeringPipeline(this.character, new KinematicData(new StaticData(this.endPosition)));
             }
         }
 
         //call the pathfinding method if the user specified a new goal
-        if (this.aStarPathFinding.InProgress)
+       /* if (this.aStarPathFinding.InProgress)
         {
             var finished = this.aStarPathFinding.Search(out this.currentSolution);
             if (finished && this.currentSolution != null)
@@ -120,7 +123,7 @@ public class PathfindingManager : MonoBehaviour
                 };
 
             }
-        }
+        }*/
 
 
         this.character.Update();
@@ -135,7 +138,7 @@ public class PathfindingManager : MonoBehaviour
         //Pipeline
         SteeringPipeline pipe = new SteeringPipeline(orig.KinematicData)
         {
-            MaxAcceleration = 30.0f
+            MaxAcceleration = 15.0f
 
         };
 
@@ -147,17 +150,17 @@ public class PathfindingManager : MonoBehaviour
         pipe.Targeters.Add(MouseClickTargeter);
 
         //Decomposer
-        PathfindingDecomposer pathfindingDecomposer = new PathfindingDecomposer()
+        pathfindingDecomposer = new PathfindingDecomposer()
         {
             Graph = this.navMesh,
             Heuristic = new EuclideanDistanceHeuristic()
         };
         pipe.Decomposers.Add(pathfindingDecomposer);
-        
+
         //Actuator - Default: Car behaviour
         Actuator actuator = new CarActuator()
         {
-            MaxAcceleration = 30.0f,
+            MaxAcceleration = 15.0f,
             Character = orig.KinematicData
         };
 
@@ -184,28 +187,31 @@ public class PathfindingManager : MonoBehaviour
 
         orig.Movement = pipe;
 
+        this.draw = true;
     }
 
     public void OnGUI()
     {
-        if (this.currentSolution != null)
+        if (this.draw) { 
+            if (this.pathfindingDecomposer.AStarSolution != null)
         {
-            var time = this.aStarPathFinding.TotalProcessingTime * 1000;
+            var time = this.pathfindingDecomposer.Astar.TotalProcessingTime * 1000;
             float timePerNode;
-            if (this.aStarPathFinding.TotalProcessedNodes > 0)
+            if (this.pathfindingDecomposer.Astar.TotalProcessedNodes > 0)
             {
-                timePerNode = time / this.aStarPathFinding.TotalProcessedNodes;
+                timePerNode = time / this.pathfindingDecomposer.Astar.TotalProcessedNodes;
             }
             else
             {
                 timePerNode = 0;
             }
-            var text = "Nodes Visited: " + this.aStarPathFinding.TotalProcessedNodes
-                       + "\nMaximum Open Size: " + this.aStarPathFinding.MaxOpenNodes
+            var text = "Nodes Visited: " + this.pathfindingDecomposer.Astar.TotalProcessedNodes
+                       + "\nMaximum Open Size: " + this.pathfindingDecomposer.Astar.MaxOpenNodes
                        + "\nProcessing time (ms): " + time
                        + "\nTime per Node (ms):" + timePerNode;
             GUI.contentColor = Color.black;
             GUI.Label(new Rect(10, 10, 200, 100), text);
+        }
         }
     }
 
@@ -214,17 +220,17 @@ public class PathfindingManager : MonoBehaviour
         if (this.draw)
         {
             //draw the current Solution Path if any (for debug purposes)
-            if (this.currentSolution != null && this.currentSmoothedSolution != null)
+            if (this.pathfindingDecomposer.AStarSolution != null && this.pathfindingDecomposer.GlobalPath != null)
             {
                 var previousPosition = this.startPosition;
-                foreach (var pathPosition in this.currentSolution.PathPositions)
+                foreach (var pathPosition in this.pathfindingDecomposer.AStarSolution.PathPositions)
                 {
                     Debug.DrawLine(previousPosition, pathPosition, Color.red);
                     previousPosition = pathPosition;
                 }
 
                 previousPosition = this.startPosition;
-                foreach (var pathPosition in this.currentSmoothedSolution.PathPositions)
+                foreach (var pathPosition in this.pathfindingDecomposer.GlobalPath.PathPositions)
                 {
                     Debug.DrawLine(previousPosition, pathPosition, Color.green);
                     previousPosition = pathPosition;
@@ -233,13 +239,13 @@ public class PathfindingManager : MonoBehaviour
             }
 
             //draw the nodes in Open and Closed Sets
-            if (this.aStarPathFinding != null)
+            if (this.pathfindingDecomposer.Astar != null)
             {
                 Gizmos.color = Color.cyan;
 
-                if (this.aStarPathFinding.Open != null)
+                if (this.pathfindingDecomposer.Astar.Open != null)
                 {
-                    foreach (var nodeRecord in this.aStarPathFinding.Open.All())
+                    foreach (var nodeRecord in this.pathfindingDecomposer.Astar.Open.All())
                     {
                         Gizmos.DrawSphere(nodeRecord.node.LocalPosition, 1.0f);
                     }
@@ -247,9 +253,9 @@ public class PathfindingManager : MonoBehaviour
 
                 Gizmos.color = Color.blue;
 
-                if (this.aStarPathFinding.Closed != null)
+                if (this.pathfindingDecomposer.Astar.Closed != null)
                 {
-                    foreach (var nodeRecord in this.aStarPathFinding.Closed.All())
+                    foreach (var nodeRecord in this.pathfindingDecomposer.Astar.Closed.All())
                     {
                         Gizmos.DrawSphere(nodeRecord.node.LocalPosition, 1.0f);
                     }

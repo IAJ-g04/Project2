@@ -20,20 +20,16 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
             // In goal, ends
             if (Astar.StartNode.Equals(Astar.GoalNode)) {
-              //  Debug.Log("Goal Reached");
                 return goal;
             }
             // else, plan
             GlobalPath currentSolution;
-            //Debug.Log("PLANNING");
             if (Astar.InProgress)
             {
-              //  Debug.Log("A star in progress");
                 var finished = Astar.Search(out currentSolution, true);
                 if (finished && currentSolution != null)
                 {
                     // gets first node
-                //    Debug.Log("getting 1st node");
                     goal.position = currentSolution.PathNodes[0].Position;
                    return goal;
                 }
