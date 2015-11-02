@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.IAJ.Unity.Utils;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement
@@ -22,7 +23,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement
 
         public DynamicCharacter(GameObject gameObject)
         {
-            this.KinematicData = new KinematicData(new StaticData(gameObject.transform.position));
+            this.KinematicData = new KinematicData(new StaticData(gameObject.transform.position, (float)Math.Floor(gameObject.transform.rotation.eulerAngles.y)));
             this.GameObject = gameObject;
             this.Drag = 1;
             this.MaxSpeed = 20.0f;

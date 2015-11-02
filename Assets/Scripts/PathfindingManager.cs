@@ -7,13 +7,15 @@ using UnityEngine;
 using RAIN.Navigation;
 using RAIN.Navigation.NavMesh;
 using RAIN.Navigation.Graph;
+using System.Collections.Generic;
 
 public class PathfindingManager : MonoBehaviour {
-
+    
 	//public fields to be set in Unity Editor
 	public GameObject endDebugSphere;
 	public Camera camera;
     public GameObject characterAvatar;
+    public GameObject[] enemiesAvatar;
 
 	//private fields for internal use only
 	private Vector3 startPosition;
@@ -26,6 +28,8 @@ public class PathfindingManager : MonoBehaviour {
 
     private DynamicCharacter character;
 
+    private List<DynamicCharacter> enemies;
+
     private bool draw;
 
 	// Use this for initialization
@@ -34,9 +38,24 @@ public class PathfindingManager : MonoBehaviour {
 	    this.draw = false;
 		this.navMesh = NavigationManager.Instance.NavMeshGraphs [0];
         this.character = new DynamicCharacter(this.characterAvatar);
+        this.enemies = new List<DynamicCharacter>();
+        for (int i = 0; i < enemiesAvatar.Length; i++)
+        {
+            DynamicCharacter enemy = new DynamicCharacter(this.enemiesAvatar[i]);
+            DynamicBackAndForth movement = new DynamicBackAndForth()
+            {
+                Character = enemy.KinematicData,
+                MaxAcceleration = 10.0f,
+                StopRadius = 2.0f,
+                SlowRadius = 5.0f,
+                MoveDistance = 25.0f
+            };
+            movement.CalculatePositions();
+            enemy.Movement = movement;
+            this.enemies.Add(enemy);
+        }
 
         this.aStarPathFinding = new NodeArrayAStarPathFinding(this.navMesh,new EuclideanDistanceHeuristic());
-	    //this.aStarPathFinding = new AStarPathfinding(this.navMesh, new SimpleUnorderedNodeList(), new SimpleUnorderedNodeList(), new EuclideanDistanceHeuristic());
 	    this.aStarPathFinding.NodesPerSearch = 100;
 	}
 	
@@ -84,7 +103,12 @@ public class PathfindingManager : MonoBehaviour {
 
 
         this.character.Update();
-	}
+        foreach(DynamicCharacter enemy in enemies)
+        {
+            enemy.Update();
+        }
+    }
+
 
     public void OnGUI()
     {

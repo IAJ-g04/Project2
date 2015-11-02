@@ -31,7 +31,7 @@ public class CameraControlScript : MonoBehaviour {
 	public void Update ()
 	{
 		//PAN
-		if ( Input.GetKey("mouse 2") )
+		if ( Input.GetMouseButton(1) )
 		{
 			//(Input.mousePosition.x - Screen.width * 0.5)/(Screen.width * 0.5)
 			
