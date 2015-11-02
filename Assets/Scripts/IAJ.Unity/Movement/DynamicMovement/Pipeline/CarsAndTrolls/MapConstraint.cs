@@ -53,8 +53,8 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
             {
                 for(int a = 0; a < 360; a++)
                 {
-                    float nx = (float) (closest.sqrMagnitude * i * Math.Cos(a));
-                    float ny = (float) (closest.sqrMagnitude * i * Math.Sin(a));
+                    float nx = (float) (closest.sqrMagnitude * i * Math.Cos((a * (Math.PI / 180))));
+                    float ny = (float) (closest.sqrMagnitude * i * Math.Sin((a * (Math.PI / 180))));
                     newPt = new Vector3(nx, closest.y,ny);
                     if (navMeshP.IsPointOnGraph(newPt))
                     {
