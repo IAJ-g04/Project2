@@ -16,8 +16,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
         public NodeArrayAStarPathFinding Astar { get; set; }
         public GlobalPath AStarSolution { get; set; }
         public float CurrentParam  {get;set;}
-
-        public Goal previousGoal { get; set; }
+        
 
         public PathfindingDecomposer()
         {
@@ -35,8 +34,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
             GlobalPath currentSolution;
              if (Astar.InProgress)
-            {
-                Debug.Log(Astar.InProgress);
+             {
                  var finished = Astar.Search(out currentSolution, true);
                 
                   if (finished && currentSolution != null)
@@ -48,12 +46,11 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                     goal.position = this.GlobalPath.LocalPaths[0].EndPosition;
                      return goal;
                  }
-                else if(currentSolution != null && currentSolution.IsPartial)
+               /* else if(currentSolution != null && currentSolution.IsPartial)
                 {
                     goal.position = currentSolution.PathPositions[0];
-                    
                     return goal;
-                }
+                }*/
             }
              else
              {
@@ -65,6 +62,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 }
 
                  CurrentParam = GlobalPath.GetParam(character.position, CurrentParam);
+
 
                  goal.position = GlobalPath.GetPosition(CurrentParam + 0.2f);
                  return goal;

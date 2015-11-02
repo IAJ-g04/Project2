@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
@@ -44,28 +45,34 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                     MaxAcceleration = this.MaxAcceleration
                 };
                 da.Target.orientation = goal.orientation;
-                steering.angular += da.GetMovement().angular;
+                steering.angular = da.GetMovement().angular;
             }
 
             if (goal.hasPosition)
             {
                 // usar o DynamicSeek
-                DynamicSeek ds = new DynamicSeek()
+                DynamicArrive ds = new DynamicArrive()
                 {
                     Character = this.Character,
                     Target = new KinematicData(),
-                    MaxAcceleration = this.MaxAcceleration
+                    MaxAcceleration = this.MaxAcceleration,
+                    SlowRadius = 10.0f,
+                    StopRadius = 4.0f
                 };
                 ds.Target.position = goal.position;
-                steering.linear += ds.GetMovement().linear;
+                steering.linear = ds.GetMovement().linear;
+                
             }
 
             //  velocidades e possivelmente erros
 
             steering.linear.Normalize();
             steering.linear *= this.MaxAcceleration;
-            steering.angular *= this.MaxAcceleration;            
-
+            steering.angular *= this.MaxAcceleration;
+            steering.linear.y = 0.0f; // Failsafe
+           
+          //  Debug.Log("X->"+ Character.position.x + " Y->" + Character.position.y + " Z->" + Character.position.z);
+          //  Debug.Log("Orientation->" + Character.orientation.ToString());
             return steering;
         }
     }
