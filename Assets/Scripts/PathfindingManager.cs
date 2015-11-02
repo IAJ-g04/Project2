@@ -177,8 +177,9 @@ public class PathfindingManager : MonoBehaviour
         {
             TrollConstraint trollConstraint = new TrollConstraint()
             {
-                Troll = troll
-            };
+                Troll = troll,
+                margin = 1.0f
+        };
             pipe.Constraints.Add(trollConstraint);
         }
 
