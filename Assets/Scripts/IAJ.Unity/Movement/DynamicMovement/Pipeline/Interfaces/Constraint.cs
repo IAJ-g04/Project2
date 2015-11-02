@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline.Interfaces
 {
-    interface Constraint
+    public abstract class Constraint
     {
-        Boolean WillViolate(LineSegmentPath path);
-        Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal);
+        public abstract Boolean WillViolate(LineSegmentPath path);
+        public abstract Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal);
     }
 }

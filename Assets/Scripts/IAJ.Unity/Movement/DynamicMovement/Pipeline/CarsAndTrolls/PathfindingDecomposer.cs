@@ -11,14 +11,11 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class DefaultDecomposer : Decomposer
+    class PathdindingDecomposer : Decomposer
     {
-        public NavMeshPathGraph graph { get; set; }
-        public IHeuristic Heuristic { get; set; }
-
-        public Goal Decompose (KinematicData character, Goal goal)
+        public override Goal Decompose (KinematicData character, Goal goal)
         {
-            AStarPathfinding Astar = new NodeArrayAStarPathFinding(graph, Heuristic);
+            AStarPathfinding Astar = new NodeArrayAStarPathFinding(Graph, Heuristic);
             Astar.InitializePathfindingSearch(character.position, goal.position);
 
             // In goal, ends
@@ -32,10 +29,10 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 var finished = Astar.Search(out currentSolution, true);
                 if (finished && currentSolution != null)
                 {
-                    GlobalPath currentSmoothedSolution = StringPullingPathSmoothing.SmoothPath(character, currentSolution);
-                    currentSmoothedSolution.CalculateLocalPathsFromPathPositions(character.position);
+                    this.GlobalPath = StringPullingPathSmoothing.SmoothPath(character, currentSolution);
+                    this.GlobalPath.CalculateLocalPathsFromPathPositions(character.position);
                     // gets first node
-                    goal.position = currentSmoothedSolution.PathPositions[0];
+                    goal.position = this.GlobalPath.PathPositions[0];
                    return goal;
                 }
             }

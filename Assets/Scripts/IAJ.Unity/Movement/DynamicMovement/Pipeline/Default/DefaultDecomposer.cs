@@ -16,7 +16,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
         public NavMeshPathGraph graph { get; set; }
         public IHeuristic Heuristic { get; set; }
 
-        public Goal Decompose (KinematicData character, Goal goal)
+        public override Goal Decompose (KinematicData character, Goal goal)
         {
             AStarPathfinding Astar = new NodeArrayAStarPathFinding(graph, Heuristic);
             Astar.InitializePathfindingSearch(character.position, goal.position);

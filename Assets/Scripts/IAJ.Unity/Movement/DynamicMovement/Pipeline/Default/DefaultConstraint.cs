@@ -16,8 +16,8 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
         public Vector3 center { set; get; }
         public int probInd { set; get; }
 
-
-        public Boolean WillViolate(LineSegmentPath path)
+       
+        public override Boolean WillViolate(LineSegmentPath path)
         {
                 //maybe not right func TO DO
            if (MathHelper.closestParamInLineSegmentToPoint(path.StartPosition, path.EndPosition, center) < radius){
@@ -26,7 +26,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
            return false;
         }
 
-        public Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)
+        public override Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)
         {
 
             // procurar ponto do segmento mais próximo ao centro da esfera

@@ -100,7 +100,7 @@ public class PathfindingManager : MonoBehaviour
                 this.endPosition = position;
                 this.draw = true;
                 //initialize the steering pipeline
-                this.aStarPathFinding.InitializePathfindingSearch(this.character.KinematicData.position, this.endPosition);
+               // this.aStarPathFinding.InitializePathfindingSearch(this.character.KinematicData.position, this.endPosition);
                 InitializeSteeringPipeline(this.character, new KinematicData(new StaticData(this.endPosition)));
             }
         }
@@ -122,7 +122,7 @@ public class PathfindingManager : MonoBehaviour
 
             }
         }
-        
+
 
         this.character.Update();
         foreach (DynamicCharacter enemy in enemies)
@@ -133,41 +133,57 @@ public class PathfindingManager : MonoBehaviour
 
     public void InitializeSteeringPipeline(DynamicCharacter orig, KinematicData dest)
     {
+        //Pipeline
+        SteeringPipeline pipe = new SteeringPipeline(orig.KinematicData)
+        {
+            MaxAcceleration = 30.0f
+
+        };
+
+        //Targeter
         Targeter MouseClickTargeter = new Targeter()
         {
             Target = dest
         };
+        pipe.Targeters.Add(MouseClickTargeter);
 
+        //Decomposer
         PathfindingDecomposer pathfindingDecomposer = new PathfindingDecomposer()
         {
             graph = this.navMesh,
             Heuristic = new EuclideanDistanceHeuristic()
-         };
-
-
-        //Default: Car behaviour
+        };
+        pipe.Decomposers.Add(pathfindingDecomposer);
+        
+        //Actuator - Default: Car behaviour
         Actuator actuator = new CarActuator()
         {
             MaxAcceleration = 30.0f,
             Character = orig.KinematicData
         };
 
-        if (orig.GameObject.tag.Equals("Enemies")){
+        if (orig.GameObject.tag.Equals("Enemies"))
+        {
             actuator = new TrollActuator()
             {
                 MaxAcceleration = 10.0f,
                 Character = orig.KinematicData
             };
         }
-        
-        SteeringPipeline pipe = new SteeringPipeline(orig.KinematicData)
-        {
-            MaxAcceleration = 30.0f
-
-        };
-        pipe.Targeters.Add(MouseClickTargeter);
-        pipe.Decomposers.Add(pathfindingDecomposer);
         pipe.Actuator = actuator;
+
+        //Constraints
+        foreach (DynamicCharacter troll in enemies)
+        {
+            TrollConstraint trollConstraint = new TrollConstraint()
+            {
+                Troll = troll
+            };
+            pipe.Constraints.Add(trollConstraint);
+        }
+
+        orig.Movement = pipe;
+
     }
 
     public void OnGUI()
