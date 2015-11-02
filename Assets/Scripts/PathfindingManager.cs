@@ -9,7 +9,6 @@ using RAIN.Navigation.NavMesh;
 using RAIN.Navigation.Graph;
 using System.Collections.Generic;
 using Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline;
-using Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline.Interfaces;
 
 public class PathfindingManager : MonoBehaviour
 {
@@ -150,7 +149,7 @@ public class PathfindingManager : MonoBehaviour
         //Decomposer
         PathfindingDecomposer pathfindingDecomposer = new PathfindingDecomposer()
         {
-            graph = this.navMesh,
+            Graph = this.navMesh,
             Heuristic = new EuclideanDistanceHeuristic()
         };
         pipe.Decomposers.Add(pathfindingDecomposer);

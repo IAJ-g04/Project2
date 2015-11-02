@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline.Interfaces;
-using Assets.Scripts.IAJ.Unity.Pathfinding;
+﻿using Assets.Scripts.IAJ.Unity.Pathfinding;
 using Assets.Scripts.IAJ.Unity.Pathfinding.Heuristics;
 using Assets.Scripts.IAJ.Unity.Pathfinding.Path;
 using RAIN.Navigation.Graph;
@@ -11,7 +10,7 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class PathdindingDecomposer : Decomposer
+    class PathfindingDecomposer : Decomposer
     {
         public override Goal Decompose (KinematicData character, Goal goal)
         {
@@ -19,7 +18,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
             Astar.InitializePathfindingSearch(character.position, goal.position);
 
             // In goal, ends
-            if (Astar.StartNode == Astar.GoalNode)
+            if (Astar.StartNode.Equals(Astar.GoalNode))
                 return goal;
 
             // else, plan
