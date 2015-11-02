@@ -19,11 +19,10 @@ namespace Assets.Scripts.IAJ.Unity.Pathfinding.Path
             Vector3 vec, n;
 
            n.x = EndPosition.x - StartPosition.x ;
-           n.y = EndPosition.y - StartPosition.y;
            n.z = EndPosition.z - StartPosition.z;
 
             vec.x = StartPosition.x + n.x * param;
-            vec.y = StartPosition.y + n.y * param;
+            vec.y = StartPosition.y;
             vec.z = StartPosition.z + n.z * param;
 
             return vec;

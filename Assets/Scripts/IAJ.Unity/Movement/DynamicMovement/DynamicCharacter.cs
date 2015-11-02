@@ -23,7 +23,8 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement
 
         public DynamicCharacter(GameObject gameObject)
         {
-            this.KinematicData = new KinematicData(new StaticData(gameObject.transform.position, (float)Math.Floor(gameObject.transform.rotation.eulerAngles.y)));
+            Debug.Log((float)Math.Floor(gameObject.transform.rotation.eulerAngles.x));
+            this.KinematicData = new KinematicData(gameObject.transform.position, Vector3.zero, (float)Math.Floor(gameObject.transform.rotation.eulerAngles.x), (float)Math.Floor(gameObject.transform.rotation.eulerAngles.y));
             this.GameObject = gameObject;
             this.Drag = 1;
             this.MaxSpeed = 20.0f;

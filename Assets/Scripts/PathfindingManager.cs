@@ -100,12 +100,13 @@ public class PathfindingManager : MonoBehaviour
                 this.endPosition = position;
                 this.draw = true;
                 //initialize the steering pipeline
+                this.aStarPathFinding.InitializePathfindingSearch(this.character.KinematicData.position, this.endPosition);
                 InitializeSteeringPipeline(this.character, new KinematicData(new StaticData(this.endPosition)));
             }
         }
 
         //call the pathfinding method if the user specified a new goal
-     /*   if (this.aStarPathFinding.InProgress)
+        if (this.aStarPathFinding.InProgress)
         {
             var finished = this.aStarPathFinding.Search(out this.currentSolution);
             if (finished && this.currentSolution != null)
@@ -121,7 +122,7 @@ public class PathfindingManager : MonoBehaviour
 
             }
         }
-        */
+        
 
         this.character.Update();
         foreach (DynamicCharacter enemy in enemies)
