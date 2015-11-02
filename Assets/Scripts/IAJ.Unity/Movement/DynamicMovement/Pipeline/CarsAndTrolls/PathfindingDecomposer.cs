@@ -13,6 +13,12 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
     class PathfindingDecomposer : Decomposer
     {
         public AStarPathfinding Astar { get; set; }
+        public float CurrentParam  {get;set;}
+
+        public PathfindingDecomposer()
+        {
+            CurrentParam = 0.0f;
+        }
 
         public override Goal Decompose (KinematicData character, Goal goal)
         {
@@ -36,10 +42,24 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                     this.GlobalPath.CalculateLocalPathsFromPathPositions(character.position);
                     // gets first node
                     goal.position = this.GlobalPath.PathPositions[0];
-                   return goal;
+                    return goal;
                 }
             }
-            return goal;      
+            else
+            {
+
+                if (GlobalPath.PathEnd(CurrentParam))
+                {
+                    goal.position = GlobalPath.LocalPaths[GlobalPath.LocalPaths.Count - 1].GetPosition(1.0f);
+                }
+
+                CurrentParam = GlobalPath.GetParam(character.position, CurrentParam);
+
+                goal.position = GlobalPath.GetPosition(CurrentParam);
+
+                return goal;
+            }
+            return goal;
         }
     }
 }
