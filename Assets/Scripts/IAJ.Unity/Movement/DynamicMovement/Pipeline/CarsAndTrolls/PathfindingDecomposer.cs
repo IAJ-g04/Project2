@@ -41,7 +41,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
              GlobalPath currentSolution;
              if (Astar.InProgress)
              {
-                 Debug.Log("AStar In Progress");
+                // Debug.Log("AStar In Progress");
                  var finished = Astar.Search(out currentSolution, true);
                 
                   if (finished && currentSolution != null)
@@ -51,7 +51,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                      this.GlobalPath.CalculateLocalPathsFromPathPositions(character.position);
                     // gets first node
                     goal.position = this.GlobalPath.LocalPaths[0].EndPosition;
-                     Debug.Log("Reached first pos " + goal);
+                  //   Debug.Log("Reached first pos " + goal);
 
                      return goal;
                  }
@@ -59,7 +59,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                 {
                     goal.position = currentSolution.PathPositions[0];
 
-                    Debug.Log("Temp " + goal);
+                //    Debug.Log("Temp " + goal);
                     return goal;
                 }
             }
@@ -69,17 +69,17 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                  if (GlobalPath.PathEnd(CurrentParam))
                  {
                      goal.position = GlobalPath.LocalPaths[GlobalPath.LocalPaths.Count - 1].GetPosition(1.0f);
-                    Debug.Log("PathEnd " + goal);
+               //     Debug.Log("PathEnd " + goal);
                     return goal;
                 }
 
                  CurrentParam = GlobalPath.GetParam(character.position, CurrentParam);
 
                  goal.position = GlobalPath.GetPosition(CurrentParam);
-                 Debug.Log("Following path " + goal);
+             //    Debug.Log("Following path " + goal);
                  return goal;
              }
-            Debug.Log("All failed " + goal);
+        //    Debug.Log("All failed " + goal);
             return new Goal();
          }
      }
