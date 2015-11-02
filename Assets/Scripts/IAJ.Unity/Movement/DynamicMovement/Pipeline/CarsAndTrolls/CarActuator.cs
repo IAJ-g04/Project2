@@ -44,6 +44,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                     Target = new KinematicData(),
                     MaxAcceleration = this.MaxAcceleration
                 };
+
                 da.Target.orientation = goal.orientation;
                 steering.angular = da.GetMovement().angular;
             }
@@ -59,6 +60,16 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
                     SlowRadius = 8.0f,
                     StopRadius = 4.0f
                 };
+
+     /*           if (ds.Target.orientation > goal.orientation)
+                {
+                    ds.Target.position += 0.1f;
+                }
+                else
+                {
+                    ds.Target.position -= 0.1f;
+                }*/
+
                 ds.Target.position = goal.position;
                 steering.linear = ds.GetMovement().linear;
                 
@@ -66,16 +77,13 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
             //  velocidades e possivelmente erros
 
+
             steering.linear.Normalize();
             steering.linear *= this.MaxAcceleration;
             steering.angular *= this.MaxAcceleration;
             steering.linear.y = 0.0f; // Failsafe
            
-            if(Character.velocity.sqrMagnitude < 0.0f)
-            {
-                Debug.Log("SPEEEED!");
-                steering.angular = 0.0f;
-            }
+         
 
           //  Debug.Log("X->"+ Character.position.x + " Y->" + Character.position.y + " Z->" + Character.position.z);
           //  Debug.Log("Orientation->" + Character.orientation.ToString());
