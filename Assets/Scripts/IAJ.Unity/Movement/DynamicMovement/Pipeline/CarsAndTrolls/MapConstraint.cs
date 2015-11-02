@@ -43,7 +43,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
         public override Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)
         {
-            if (this.chars.KinematicData.velocity.sqrMagnitude < 1.5f)
+            if (this.chars.KinematicData.velocity.sqrMagnitude > 1.5f)
             {
                 this.chars.KinematicData.velocity *= 0.01f;
             }
