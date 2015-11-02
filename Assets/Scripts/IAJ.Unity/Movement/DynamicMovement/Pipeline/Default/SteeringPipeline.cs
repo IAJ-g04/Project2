@@ -58,7 +58,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
             for (int i = 0; i <= MaxConstraintSteps; i++)
             {
-
+                Actuator.goal = g;
                 LineSegmentPath path = Actuator.GetPath();
                 foreach (Constraint c in Constraints)
                 {

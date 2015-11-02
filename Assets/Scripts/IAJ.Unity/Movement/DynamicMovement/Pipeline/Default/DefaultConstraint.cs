@@ -17,7 +17,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
         public int probInd { set; get; }
 
 
-        public Boolean WillViolate(GlobalPath path)
+        public override Boolean WillViolate(GlobalPath path)
         {
             int ind = 0;
             foreach (LocalPath p in path.LocalPaths)
@@ -34,7 +34,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
         }
 
-        public Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)
+        public override Goal Suggest(LineSegmentPath path, KinematicData character, Goal goal)
         {
 
             // procurar ponto do segmento mais próximo ao centro da esfera

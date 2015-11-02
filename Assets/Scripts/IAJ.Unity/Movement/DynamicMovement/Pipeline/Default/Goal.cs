@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class Goal : KinematicData
+    public class Goal : KinematicData
     {
 
         public bool hasPosition { get; set; }

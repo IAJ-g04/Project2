@@ -6,9 +6,11 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline.Interfaces
 {
-   interface Actuator
+   public abstract class Actuator : DynamicMovement
     {
-        LineSegmentPath GetPath();
-        MovementOutput GetMovement();
+        public Goal goal { get; set; }
+
+        public abstract LineSegmentPath GetPath();
+        public override abstract MovementOutput GetMovement();
     }
 }

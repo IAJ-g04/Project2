@@ -7,11 +7,8 @@ using System.Text;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {
-    class CarActuator : DynamicMovement, Actuator    
+    class CarActuator : Actuator    
     {
-
-        public Goal goal { get; set; }
-
         public override string Name
         {
             get { return "CarActuator"; }
@@ -19,7 +16,7 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
         public override KinematicData Target { get; set; }
 
-        public LineSegmentPath GetPath()
+        public override LineSegmentPath GetPath()
         {
             LineSegmentPath segment;
             if (goal.hasPosition) {
