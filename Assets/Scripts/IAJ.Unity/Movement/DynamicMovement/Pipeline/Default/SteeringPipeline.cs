@@ -6,6 +6,7 @@ using System.Text;
 using Assets.Scripts.IAJ.Unity.Movement;
 using Assets.Scripts.IAJ.Unity.Pathfinding.Path;
 using Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline.Interfaces;
+using UnityEngine;
 
 namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 {

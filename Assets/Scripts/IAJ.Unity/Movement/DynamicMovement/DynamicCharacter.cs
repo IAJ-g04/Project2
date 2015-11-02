@@ -23,7 +23,6 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement
 
         public DynamicCharacter(GameObject gameObject)
         {
-            Debug.Log((float)Math.Floor(gameObject.transform.rotation.eulerAngles.x));
             this.KinematicData = new KinematicData(gameObject.transform.position, Vector3.zero, (float)Math.Floor(gameObject.transform.rotation.eulerAngles.x), (float)Math.Floor(gameObject.transform.rotation.eulerAngles.y));
             this.GameObject = gameObject;
             this.Drag = 1;

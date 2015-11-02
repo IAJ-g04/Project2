@@ -17,5 +17,15 @@ namespace Assets.Scripts.IAJ.Unity.Movement.DynamicMovement.Pipeline
 
             return g;
         }
+
+        public override string ToString()
+        {
+            string returnvalue = string.Empty;
+            returnvalue += "Targeter- ";
+
+            returnvalue += "Position: " + Target.position;
+
+            return returnvalue;
+        }
     }
 }
